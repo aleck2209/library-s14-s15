@@ -20,4 +20,10 @@ const getAllMembers = async () => {
 	return results.rows;
 };
 
-export { createMember, getAllMembers };
+const getMemberById = async(id) => {
+    const result = pool.query('SELECT id_member, name, email, phone_number FROM members WHERE id_member = $1', [id])
+
+    return (await result).rows[0]
+}
+
+export { createMember, getAllMembers, getMemberById };
