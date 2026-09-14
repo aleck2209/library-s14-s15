@@ -1,4 +1,10 @@
-import { findAllMembers } from "./member.service.js";
+import { addMember ,findAllMembers } from "./member.service.js";
+
+const createMemberController = async (req, res) => {
+    const member = await addMember(req.body)
+
+    res.status(201).json(member);
+}
 
 const getAllMembersController = async (req, res) => {
 	const members = await findAllMembers();
@@ -6,4 +12,4 @@ const getAllMembersController = async (req, res) => {
 	res.status(200).json(members);
 };
 
-export { getAllMembersController };
+export { createMemberController, getAllMembersController };

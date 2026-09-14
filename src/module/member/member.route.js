@@ -1,8 +1,12 @@
 import { Router } from "express";
-import { getAllMembersController as getAllMembers } from "./member.controller.js";
+import {
+	createMemberController as createMember,
+	getAllMembersController as getAllMembers,
+} from "./member.controller.js";
 
 const memberRoutes = Router();
 
-memberRoutes.get('/', getAllMembers);
+memberRoutes.post("/", createMember);
+memberRoutes.get("/", getAllMembers);
 
-export default memberRoutes
+export default memberRoutes;
