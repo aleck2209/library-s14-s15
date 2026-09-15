@@ -1,4 +1,9 @@
-import { createMember, getAllMembers, getMemberById } from "./member.model.js";
+import {
+	createMember,
+	getAllMembers,
+	getMemberById,
+	updateMember,
+} from "./member.model.js";
 
 const addMember = async ({ name, email, phoneNumber }) => {
 	return await createMember({
@@ -12,8 +17,12 @@ const findAllMembers = async () => {
 	return await getAllMembers();
 };
 
-const findMemberById = async(id) => {
-    return await getMemberById(id);
-}
+const findMemberById = async (id) => {
+	return await getMemberById(id);
+};
 
-export { addMember, findAllMembers, findMemberById };
+const editMember = async (id, data) => {
+	return await updateMember(id, data);
+};
+
+export { addMember, findAllMembers, findMemberById, editMember };

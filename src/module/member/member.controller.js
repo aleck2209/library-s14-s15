@@ -1,4 +1,9 @@
-import { addMember, findAllMembers, findMemberById } from "./member.service.js";
+import {
+	addMember,
+	findAllMembers,
+	findMemberById,
+	editMember,
+} from "./member.service.js";
 
 const createMemberController = async (req, res) => {
 	const member = await addMember(req.body);
@@ -13,8 +18,18 @@ const getAllMembersController = async (_req, res) => {
 };
 
 const getMemberByIdController = async (req, res) => {
-    const member = await findMemberById(req.params.id);
-    res.status(200).json(member)
-}
+	const member = await findMemberById(req.params.id);
+	res.status(200).json(member);
+};
 
-export { createMemberController, getAllMembersController, getMemberByIdController };
+const updateMemberController = async (req, res) => {
+	const member = await editMember(req.params.id, req.body);
+	res.status(200).json(member);
+};
+
+export {
+	createMemberController,
+	getAllMembersController,
+	getMemberByIdController,
+	updateMemberController,
+};
