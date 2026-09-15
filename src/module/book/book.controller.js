@@ -1,0 +1,21 @@
+import { findAllBooks, findBookById, addBook } from "./book.service.js";
+
+const getAllBooksController = async (_req, res) => {
+	const books = await findAllBooks();
+
+	res.status(200).json(books);
+};
+
+const getBookByIdController = async (req, res) => {
+	const book = await findBookById(req.params.id);
+
+	res.status(200).json(book);
+};
+
+const createBookController = async (req, res) => {
+	const book = await addBook(req.body);
+
+	res.status(201).json(book);
+};
+
+export { getAllBooksController, getBookByIdController, createBookController };
