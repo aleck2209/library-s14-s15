@@ -1,4 +1,10 @@
-import { createAuthor, getAllAuthors } from "./author.model.js";
+import {
+	createAuthor,
+	getAllAuthors,
+	getAuthorById,
+	updateAuthor,
+    deleteAuthor
+} from "./author.model.js";
 
 const addAuthor = async ({ name, nationality }) => {
 	return await createAuthor({
@@ -11,4 +17,16 @@ const findAllAuthors = async () => {
 	return await getAllAuthors();
 };
 
-export { addAuthor, findAllAuthors };
+const findAuthorById = async (id) => {
+	return await getAuthorById(id);
+};
+
+const editAuthor = async (id, data) => {
+	return await updateAuthor(id, data);
+};
+
+const removeAuthor = async (id) => {
+    return await deleteAuthor(id);
+};
+
+export { addAuthor, findAllAuthors, findAuthorById, editAuthor, removeAuthor };

@@ -1,9 +1,15 @@
-import { addAuthor, findAllAuthors } from "./author.service.js";
+import {
+	addAuthor,
+	findAllAuthors,
+	findAuthorById,
+	editAuthor,
+    removeAuthor
+} from "./author.service.js";
 
 const createAuthorController = async (req, res) => {
-    const author = await addAuthor(req.body);
+	const author = await addAuthor(req.body);
 
-    res.status(201).json(author);
+	res.status(201).json(author);
 };
 
 const getAllAuthorsController = async (_req, res) => {
@@ -12,4 +18,28 @@ const getAllAuthorsController = async (_req, res) => {
 	res.status(200).json(authors);
 };
 
-export { createAuthorController, getAllAuthorsController };
+const getAuthorByIdController = async (req, res) => {
+	const author = await findAuthorById(req.params.id);
+
+	res.status(200).json(author);
+};
+
+const updateAuthorController = async (req, res) => {
+	const author = await editAuthor(req.params.id, req.body);
+
+	res.status(200).json(author);
+};
+
+const deleteAuthorController = async (req, res) => {
+    const author = await removeAuthor(req.params.id);
+
+    res.status(200).json(author);
+};
+
+export {
+	createAuthorController,
+	getAllAuthorsController,
+	getAuthorByIdController,
+	updateAuthorController,
+    deleteAuthorController
+};
