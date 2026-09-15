@@ -18,9 +18,30 @@ const getBookById = async (id) => {
 };
 
 const createBook = async ({ title, year, status }) => {
-    const result = await pool.query(`INSERT INTO books (title, year, status) VALUES ($1, $2, $3) RETURNING id_book, title, year, status;`, [title, year, status]);
+	const result = await pool.query(
+		`INSERT INTO books (title, year, status) VALUES ($1, $2, $3) RETURNING id_book, title, year, status;`,
+		[title, year, status],
+	);
 
-    return result.rows[0];
+	return result.rows[0];
 };
 
-export { getAllBooks, getBookById, createBook };
+const updateBook = async (id, { title, year, status }) => {
+	const result = await pool.query(
+		`UPDATE books SET title = $1, year = $2, status = $3 WHERE id_book = $4 RETURNING id_book, title, year, status;`,
+		[title, year, status, id],
+	);
+
+	return result.rows[0];
+};
+
+const deleteBook = async (id) => {
+	const result = await pool.query(
+		` DELETE FROM books WHERE id_book = $1 RETURNING id_book, title, year, status;`,
+		[id],
+	);
+
+	return result.rows[0];
+};
+
+export { getAllBooks, getBookById, createBook, updateBook, deleteBook };
