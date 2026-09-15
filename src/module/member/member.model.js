@@ -41,4 +41,19 @@ const updateMember = async (id, { name, email, phoneNumber }) => {
 	return result.rows[0];
 };
 
-export { createMember, getAllMembers, getMemberById, updateMember };
+const deleteMember = async (id) => {
+	const result = await pool.query(
+		"DELETE FROM members WHERE id_member = $1 RETURNING id_member, name, email, phone_number;",
+		[id],
+	);
+
+	return result.rows[0];
+};
+
+export {
+	createMember,
+	getAllMembers,
+	getMemberById,
+	updateMember,
+	deleteMember,
+};

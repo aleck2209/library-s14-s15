@@ -3,6 +3,7 @@ import {
 	getAllMembers,
 	getMemberById,
 	updateMember,
+	deleteMember,
 } from "./member.model.js";
 
 const addMember = async ({ name, email, phoneNumber }) => {
@@ -25,4 +26,8 @@ const editMember = async (id, data) => {
 	return await updateMember(id, data);
 };
 
-export { addMember, findAllMembers, findMemberById, editMember };
+const removeMember = async (id) => {
+	return await deleteMember(id);
+};
+
+export { addMember, findAllMembers, findMemberById, editMember, removeMember };

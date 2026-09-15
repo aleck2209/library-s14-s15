@@ -3,6 +3,7 @@ import {
 	findAllMembers,
 	findMemberById,
 	editMember,
+	removeMember,
 } from "./member.service.js";
 
 const createMemberController = async (req, res) => {
@@ -27,9 +28,15 @@ const updateMemberController = async (req, res) => {
 	res.status(200).json(member);
 };
 
+const deleteMemberController = async (req, res) => {
+	const member = await removeMember(req.params.id);
+	res.status(200).json(member);
+};
+
 export {
 	createMemberController,
 	getAllMembersController,
 	getMemberByIdController,
 	updateMemberController,
+	deleteMemberController,
 };
