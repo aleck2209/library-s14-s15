@@ -2,7 +2,10 @@ import pool from "../../config/database.js";
 
 const getAllBooks = async () => {
 	const result = await pool.query(
-		`SELECT id_book, title, year, status FROM books ORDER BY id_book;`,
+		`SELECT b.id_book, b.title, b.year, b.status, a.name AS author_name
+        FROM books b
+        JOIN authors a ON a.id_author = b.id_author
+        ORDER BY b.id_book;`,
 	);
 
 	return result.rows;
@@ -10,17 +13,22 @@ const getAllBooks = async () => {
 
 const getBookById = async (id) => {
 	const result = await pool.query(
-		`SELECT id_book, title, year, status FROM books WHERE id_book = $1;`,
+		`SELECT b.id_book, b.title, b.year, b.status, a.name AS author_name
+        FROM books b
+        JOIN authors a ON a.id_author = b.id_author
+        WHERE b.id_book = $1;`,
 		[id],
 	);
 
 	return result.rows[0];
 };
 
-const createBook = async ({ title, year, status }) => {
+const createBook = async ({ title, year, status, authorId }) => {
 	const result = await pool.query(
-		`INSERT INTO books (title, year, status) VALUES ($1, $2, $3) RETURNING id_book, title, year, status;`,
-		[title, year, status],
+		`INSERT INTO books (title, year, status, id_author)
+VALUES ($1, $2, $3, $4)
+RETURNING id_book, title, year, status, id_author;`,
+		[title, year, status, authorId],
 	);
 
 	return result.rows[0];

@@ -1,3 +1,4 @@
+import { getAuthorById } from "../author/author.model.js";
 import {
 	getAllBooks,
 	getBookById,
@@ -14,8 +15,8 @@ const findBookById = async (id) => {
 	return await getBookById(id);
 };
 
-const addBook = async (data) => {
-	return await createBook(data);
+const addBook = async ({ title, year, status, authorId }) => {
+	return await createBook({title, year, status, authorId})
 };
 
 const editBook = async (id, data) => {
