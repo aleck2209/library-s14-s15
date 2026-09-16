@@ -7,17 +7,17 @@ import {
     deleteMemberController as deleteMember,
     getMemberLoansController as getMemberLoans
 } from "./member.controller.js";
-import { validate } from "../../middleware/validate.middleware.js";
-import { createMemberSchema } from "./member.validation.js";
+import { validate, validateId } from "../../middleware/validate.middleware.js";
+import { createMemberSchema as memberSchema } from "./member.validation.js";
 
 const memberRoutes = Router();
 
-memberRoutes.post("/", validate(createMemberSchema), createMember);
+memberRoutes.post("/", validate(memberSchema), createMember);
 memberRoutes.get("/", getAllMembers);
-memberRoutes.get("/:id/loans", getMemberLoans);
-memberRoutes.get("/:id", getMemberById);
-memberRoutes.put("/:id", updateMember);
-memberRoutes.delete("/:id", deleteMember);
+memberRoutes.get("/:id/loans", validateId, getMemberLoans);
+memberRoutes.get("/:id", validateId, getMemberById);
+memberRoutes.put("/:id", validateId, validate(memberSchema), updateMember);
+memberRoutes.delete("/:id", validateId, deleteMember);
 
 
 export default memberRoutes;

@@ -6,15 +6,15 @@ import {
     updateAuthorController as updateAuthor,
     deleteAuthorController as deleteAuthor
 } from "./author.controller.js";
-import { validate } from "../../middleware/validate.middleware.js";
+import { validate, validateId } from "../../middleware/validate.middleware.js";
 import { authorSchema } from "./author.validation.js";
 
 const authorRoutes = Router();
 
 authorRoutes.post("/", validate(authorSchema), createAuthor);
 authorRoutes.get("/", getAllAuthors);
-authorRoutes.get("/:id", getAuthorById);
-authorRoutes.put("/:id", validate(authorSchema), updateAuthor);
-authorRoutes.delete("/:id", deleteAuthor);
+authorRoutes.get("/:id", validateId, getAuthorById);
+authorRoutes.put("/:id", validateId, validate(authorSchema), updateAuthor);
+authorRoutes.delete("/:id", validateId, deleteAuthor);
 
 export default authorRoutes;

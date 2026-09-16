@@ -7,7 +7,7 @@ import {
     deleteBookController as deleteBook,
     searchBooksController as searchBooks
 } from "./book.controller.js";
-import { validate } from "../../middleware/validate.middleware.js";
+import { validate, validateId } from "../../middleware/validate.middleware.js";
 import { schemaBook } from "./book.validation.js";
 
 const bookRoutes = Router();
@@ -15,9 +15,9 @@ const bookRoutes = Router();
 bookRoutes.post('/', validate(schemaBook), createBook);
 bookRoutes.get("/", getAllBooks);
 bookRoutes.get("/search", searchBooks);
-bookRoutes.get("/:id", getBookById);
-bookRoutes.put("/:id", validate(schemaBook), updateBook);
-bookRoutes.delete("/:id", deleteBook);
+bookRoutes.get("/:id", validateId, getBookById);
+bookRoutes.put("/:id", validateId, validate(schemaBook), updateBook);
+bookRoutes.delete("/:id", validateId, deleteBook);
 
 
 export default bookRoutes;
