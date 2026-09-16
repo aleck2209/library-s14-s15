@@ -5,6 +5,7 @@ import {
 	editMember,
 	removeMember,
 } from "./member.service.js";
+import { findLoansByMemberId } from "../loan/loan.service.js";
 
 const createMemberController = async (req, res) => {
 	const member = await addMember(req.body);
@@ -33,10 +34,17 @@ const deleteMemberController = async (req, res) => {
 	res.status(200).json(member);
 };
 
+const getMemberLoansController = async (req, res) => {
+    const loans = await findLoansByMemberId(req.params.id);
+
+    res.status(200).json(loans);
+};
+
 export {
 	createMemberController,
 	getAllMembersController,
 	getMemberByIdController,
 	updateMemberController,
 	deleteMemberController,
+	getMemberLoansController
 };

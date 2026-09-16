@@ -1,4 +1,4 @@
-import { addLoan, findAllLoans } from "./loan.service.js";
+import { addLoan, findAllLoans, returnBook } from "./loan.service.js";
 
 const createLoanController = async (req, res) => {
 	const loan = await addLoan(req.body);
@@ -12,4 +12,10 @@ const getAllLoansController = async(req, res) => {
     res.status(200).json(loans);
 }
 
-export { createLoanController, getAllLoansController };
+const returnBookController = async (req, res) => {
+    const loan = await returnBook(req.params.id);
+
+    res.status(200).json(loan);
+};
+
+export { createLoanController, getAllLoansController, returnBookController };
