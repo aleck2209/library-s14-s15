@@ -71,4 +71,12 @@ const searchBooks = async (search) => {
     return result.rows;
 }
 
-export { getAllBooks, getBookById, createBook, updateBook, deleteBook, searchBooks };
+const updateStatusBook = async (status, id) => {
+    await pool.query(`
+        UPDATE books
+        SET status = $1
+        WHERE  id_book = $2; 
+    `, [status, id])
+}
+
+export { getAllBooks, getBookById, createBook, updateBook, deleteBook, searchBooks, updateStatusBook };
