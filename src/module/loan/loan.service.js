@@ -7,23 +7,24 @@ import {
 } from "./loan.model.js";
 import { getBookById, updateStatusBook } from "../book/book.model.js";
 import { getMemberById } from "../member/member.model.js";
+import AppError from "../../middleware/AppError.js";
 
 const addLoan = async ({ expectedReturnDate, bookId, memberId }) => {
 	try {
 		const book = await getBookById(bookId);
 
 		if (!book) {
-			throw new Error("Book not found");
+			throw new AppError("Book not found", 404);
 		}
 
 		if (book.status !== "disponible") {
-			throw new Error("Book is already borrowed");
+			throw new AppError("Book is already borrowed", 409);
 		}
 
 		const member = await getMemberById(memberId);
 
 		if (!member) {
-			throw new Error("Member not found");
+			throw new AppErrorError("Member not found", 404);
 		}
 
 		const loanResult = await createLoan({
@@ -35,7 +36,6 @@ const addLoan = async ({ expectedReturnDate, bookId, memberId }) => {
 
 		return loanResult;
 	} catch (error) {
-		console.error(error);
 		throw error;
 	}
 };

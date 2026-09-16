@@ -1,4 +1,3 @@
-import { getAuthorById } from "../author/author.model.js";
 import {
 	getAllBooks,
 	getBookById,
