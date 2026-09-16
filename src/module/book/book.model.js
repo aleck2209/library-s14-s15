@@ -1,11 +1,14 @@
 import pool from "../../config/database.js";
 
-const getAllBooks = async () => {
+const getAllBooks = async (limit, offset) => {
 	const result = await pool.query(
 		`SELECT b.id_book, b.title, b.year, b.status, a.name AS author_name
         FROM books b
-        JOIN authors a ON a.id_author = b.id_author
-        ORDER BY b.id_book;`,
+        JOIN authors a 
+        ON a.id_author = b.id_author
+        ORDER BY b.id_book
+        LIMIT $1
+        OFFSET $2;`, [limit, offset],
 	);
 
 	return result.rows;
@@ -52,4 +55,20 @@ const deleteBook = async (id) => {
 	return result.rows[0];
 };
 
-export { getAllBooks, getBookById, createBook, updateBook, deleteBook };
+const searchBooks = async (search) => {
+    const result = await pool.query(
+        `
+            SELECT b.id_book, b.title, b.year, b.status, b.id_author
+            FROM books b
+            JOIN authors a
+            ON b.id_author = a.id_author
+            WHERE b.title ILIKE $1
+            OR a.name ILIKE $1
+            ORDER BY b.id_book;
+        `, [`%${search}%`]
+    );
+
+    return result.rows;
+}
+
+export { getAllBooks, getBookById, createBook, updateBook, deleteBook, searchBooks };

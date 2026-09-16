@@ -3,11 +3,15 @@ import {
 	findBookById,
 	addBook,
 	editBook,
-    removeBook
+	removeBook,
+	lookForBooks,
 } from "./book.service.js";
 
-const getAllBooksController = async (_req, res) => {
-	const books = await findAllBooks();
+const getAllBooksController = async (req, res) => {
+    const limit = Number(req.query.limit) || 10
+    const page = Number(req.query.page) || 1
+
+	const books = await findAllBooks(limit, page);
 
 	res.status(200).json(books);
 };
@@ -31,9 +35,16 @@ const updateBookController = async (req, res) => {
 };
 
 const deleteBookController = async (req, res) => {
-    const book = await removeBook(req.params.id);
+	const book = await removeBook(req.params.id);
 
-    res.status(200).json(book);
+	res.status(200).json(book);
+};
+
+const searchBooksController = async (req, res) => {
+	const { q } = req.query;
+	const books = await lookForBooks(q);
+
+	res.status(200).json(books);
 };
 
 export {
@@ -41,5 +52,6 @@ export {
 	getBookByIdController,
 	createBookController,
 	updateBookController,
-    deleteBookController
+	deleteBookController,
+	searchBooksController,
 };

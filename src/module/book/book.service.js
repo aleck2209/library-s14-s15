@@ -4,11 +4,13 @@ import {
 	getBookById,
 	createBook,
 	updateBook,
-    deleteBook
+    deleteBook,
+    searchBooks
 } from "./book.model.js";
 
-const findAllBooks = async () => {
-	return await getAllBooks();
+const findAllBooks = async (limit = 10, page = 1) => {
+    const offset = (page -1) * limit
+	return await getAllBooks(limit, offset);
 };
 
 const findBookById = async (id) => {
@@ -27,4 +29,8 @@ const removeBook = async (id) => {
     return await deleteBook(id);
 };
 
-export { findAllBooks, findBookById, addBook, editBook, removeBook };
+const lookForBooks = async (search) => {
+    return await searchBooks(search)
+}
+
+export { findAllBooks, findBookById, addBook, editBook, removeBook, lookForBooks };
