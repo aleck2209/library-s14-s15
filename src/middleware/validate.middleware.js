@@ -24,7 +24,7 @@ const validate = (schema) => {
 };
 
 const validateId = (req, res, next) => {
-    const id = req.params.id
+    const id = Number(req.params.id)
 
     if (!Number.isInteger(id) || id <= 0) {
         res.status(400).json({

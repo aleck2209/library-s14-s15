@@ -5,10 +5,13 @@ import bookRoutes from "./module/book/book.route.js";
 import loanRoutes from "./module/loan/loan.route.js";
 import statisticRoutes from "./module/statistic/statistic.route.js";
 import errorMiddleware from "./middleware/error.middleware.js";
+import logger from "./middleware/logger.middleware.js";
 
 const app = express();
 
 app.use(express.json());
+
+app.use(logger)
 
 // Routes
 app.use("/api/members", memberRoutes);
